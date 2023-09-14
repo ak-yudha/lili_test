@@ -1,0 +1,145 @@
+# This is the OpenAPI specification for your service. It is used to generate the client code.
+# To generate the server code, use the Gradle task `openApiGenerate`. The
+# generated code will be placed in `build/generate-resources/main`.
+#
+# We will evaluate you based on how well you design your API.
+# 1. How well it follows REST principles.
+# 2. How easy it is to understand and use.
+#
+# References
+# 1. https://swagger.io/specification/
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Article Web Service
+  license:
+    name: MIT
+servers:
+  - url: http://localhost
+paths:
+  /articles:
+    get:
+      summary: This endpoint to get article, if param null get all article and with param search by Title and Body.
+      operationId: articles
+      parameters:
+        - name: title
+          in: query
+          schema:
+            type: string
+        - name: body
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Test return
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ArticleResponse"
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /articles/{id}:
+    get:
+      summary: This endpoint to get article by id
+      operationId: articles
+      parameters:
+        - description: id
+          in: path
+          name: id
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: Test return
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ArticleResponse"
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /article:
+    post:
+      summary: Add New Article
+      operationId: article
+      parameters:
+        - description: article
+          in: query
+          name: article
+          required: true
+          type: string
+        - description: title
+          in: query
+          name: title
+          required: true
+          type: string
+        - description: body
+          in: query
+          name: body
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Successfully add article
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ArticleResponse"
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        '400':
+          description: Invalid Input
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+components:
+  schemas:
+    ArticleResponse:
+      type: object
+      required:
+        - message
+      properties:
+        result:
+          type: array
+        data:
+          items:
+            $ref: "#/components/schemas/ArticleDataResponse"
+          type: array
+    ArticleDataResponse:
+      properties:
+        id:
+          type: integer
+        created_at:
+          type: string
+        updated_at:
+          type: string
+        deleted_at:
+          type: string
+        author:
+          type: string
+        title:
+          type: string
+        body:
+          type: string
+    ErrorResponse:
+      type: object
+      required:
+        - message
+      properties:
+        message:
+          type: string
