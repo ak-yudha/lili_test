@@ -21,5 +21,15 @@ services:
     volumes:
       - postgres-db:/var/lib/postgresql/data
 
+  swagger-ui:
+    image: swaggerapi/swagger-ui
+    container_name: swagger-ui
+    ports:
+      - "8001:8080"
+    volumes:
+      - ./swagger:/usr/share/nginx/html/swagger
+    environment:
+      API_URL: swagger/api.yml
+
 volumes:
   postgres-db:

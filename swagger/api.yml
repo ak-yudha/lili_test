@@ -1,5 +1,5 @@
 # This is the OpenAPI specification for your service. It is used to generate the client code.
-# To generate the server code, use the Gradle task `openApiGenerate`. The
+# To generate the server code, use the Gradle task `openApiGenerate`. The 
 # generated code will be placed in `build/generate-resources/main`.
 #
 # We will evaluate you based on how well you design your API.
@@ -11,81 +11,72 @@
 openapi: "3.0.0"
 info:
   version: 1.0.0
-  title: Article Web Service
+  title: Product Web Services
   license:
-    name: MIT
+    name: Aulia Yudha K
 servers:
-  - url: http://localhost
+  - url: http://127.0.0.1:3000/
 paths:
-  /articles:
-    get:
-      summary: This endpoint to get article, if param null get all article and with param search by Title and Body.
-      operationId: articles
-      parameters:
-        - name: title
-          in: query
-          schema:
-            type: string
-        - name: body
-          in: query
-          schema:
-            type: string
-      responses:
-        '200':
-          description: Test return
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ArticleResponse"
-        '404':
-          description: Not found
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-
-  /articles/{id}:
-    get:
-      summary: This endpoint to get article by id
-      operationId: articles
-      parameters:
-        - description: id
-          in: path
-          name: id
-          required: true
-          type: integer
-      responses:
-        '200':
-          description: Test return
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ArticleResponse"
-        '404':
-          description: Not found
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-
-  /article:
+  /product:
     post:
-      summary: Add New Article
-      operationId: article
+      summary: Add New Product
+      operationId: product
       parameters:
-        - description: article
+        - description: name
           in: query
-          name: article
+          name: name
+          type: string
+        - description: description
+          in: query
+          name: description
+          type: string
+        - description: thumbnail_url
+          in: query
+          name: thumbnail_url
           required: true
           type: string
-        - description: title
+        - description: origin_price
           in: query
-          name: title
+          name: origin_price
+          required: true
+          type: int
+        - description: discounted_price
+          in: query
+          name: discounted_price
+          required: true
+          type: int
+        - description: discounted_rate
+          in: query
+          name: discounted_rate
+          type: int
+        - description: status
+          in: query
+          name: status
           required: true
           type: string
-        - description: body
+        - description: in_stock
           in: query
-          name: body
+          name: in_stock
+          required: true
+          type: int
+        - description: is_preorder
+          in: query
+          name: is_preorder
+          required: true
+          type: int
+        - description: is_purchasable
+          in: query
+          name: is_purchasable
+          required: true
+          type: int
+        - description: delivery_condition
+          in: query
+          name: delivery_condition
+          required: true
+          type: string
+        - description: delivery_display
+          in: query
+          name: delivery_display
           required: true
           type: string
       responses:
@@ -94,7 +85,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ArticleResponse"
+                $ref: "#/components/schemas/ProductResponse"
         '404':
           description: Not found
           content:
@@ -107,9 +98,127 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
+  /user:
+    post:
+      summary: Add New User
+      operationId: user
+      parameters:
+        - description: name
+          in: query
+          name: name
+          type: string
+        - description: email
+          in: query
+          name: email
+          type: string
+        - description: password
+          in: query
+          name: password
+          type: string
+        - description: phone
+          in: query
+          name: phone
+          type: string
+        - description: status
+          in: query
+          name: status
+          type: string
+      responses:
+        '200':
+          description: Successfully add article
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductResponse"
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        '400':
+          description: Invalid Input
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /favorites:
+    post:
+      summary: Add New Favorites
+      operationId: favorites
+      parameters:
+        - description: code
+          in: query
+          name: code
+          type: string
+        - description: prod_id
+          in: query
+          name: prod_id
+          type: int
+        - description: name
+          in: query
+          name: name
+          type: string
+        - description: price
+          in: query
+          name: price
+          type: int
+        - description: items
+          in: query
+          name: items
+          type: int
+      responses:
+        '200':
+          description: Successfully add article
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductResponse"
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        '400':
+          description: Invalid Input
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+
+  /products:
+    get:
+      summary: This endpoint to get product, if param null get all product and with param search by Name and DeliveryCondition.
+      operationId: products
+      parameters:
+        - name: name
+          in: query
+          schema:
+            type: string
+        - name: delivery_condition
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Test return
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductResponse"
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
 components:
   schemas:
-    ArticleResponse:
+    ProductResponse:
       type: object
       required:
         - message
@@ -118,9 +227,9 @@ components:
           type: array
         data:
           items:
-            $ref: "#/components/schemas/ArticleDataResponse"
+            $ref: "#/components/schemas/ProductDataResponse"
           type: array
-    ArticleDataResponse:
+    ProductDataResponse:
       properties:
         id:
           type: integer
