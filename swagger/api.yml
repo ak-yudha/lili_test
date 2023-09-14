@@ -148,10 +148,10 @@ paths:
       summary: Add New Favorites
       operationId: favorites
       parameters:
-        - description: code
+        - description: user_id
           in: query
-          name: code
-          type: string
+          name: user_id
+          type: int
         - description: prod_id
           in: query
           name: prod_id

@@ -36,3 +36,11 @@ func ListProduct(c *fiber.Ctx) error {
 
 	return c.Status(200).JSON(fiber.Map{"Data": products})
 }
+
+func GetProduct(c *fiber.Ctx) error {
+	id := c.Params("id")
+
+	articles := []models.Product{}
+	database.DB.Db.First(&articles, id)
+	return c.Status(200).JSON(fiber.Map{"Data": articles})
+}

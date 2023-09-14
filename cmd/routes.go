@@ -13,6 +13,7 @@ func setupRoutes(app *fiber.App) {
 	app.Get("/product", handlers.ListProduct)
 	app.Post("/user", handlers.CreateUser)
 	app.Post("/favorites", handlers.CreateFavorites)
+	app.Get("/product/:id", handlers.GetProduct)
 
 	app.Get("/swagger/*", swagger.New(swagger.Config{ // custom
 		URL:         "http://example.com/doc.json",

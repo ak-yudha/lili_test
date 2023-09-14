@@ -30,7 +30,7 @@ type Users struct {
 
 type Favorites struct {
 	gorm.Model
-	Code   string  `gorm:"not null" form:"code" json:"code"` //username (one user will have one cart code = username)
+	UserID int     `gorm:"not null" form:"user_id" json:"user_id"`
 	ProdID int     `gorm:"not null" form:"prod_id" json:"prod_id"`
 	Name   string  `gorm:"not null" form:"name" json:"name"`
 	Price  float64 `gorm:"not null" form:"price" json:"price"`
